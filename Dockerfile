@@ -1,3 +1,3 @@
 FROM jupyter/scipy-notebook
 
-RUN conda env update -f environment.yml
+RUN conda env update -n base -f environment.yml
