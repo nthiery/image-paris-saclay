@@ -56,7 +56,15 @@ fetch () {
 }
 
 submit() {
-    nbgrader submit --ExchangeSubmit.root=/public/info-111/exchange --course=info-111 $1
+    run nbgrader submit --ExchangeSubmit.root=/public/info-111/exchange --course=info-111 $1
+    exit 0
+}
+
+mount() {
+    cd ~/
+    run mkdir -p Info111
+    run sshfs tp-ssh1.dep-informatique.u-psud.fr:Info111 Info111
+    exit 0
 }
 
 command=$1
@@ -90,6 +98,8 @@ case $command in
     run) # run an arbitrary command in the conda environment; for testing and teacher's use
         command="$1"
         shift;;
+    mount)
+        mount;;
     *)
         echo commande info-111 $command inconnue
         help
