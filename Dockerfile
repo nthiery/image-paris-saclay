@@ -13,7 +13,7 @@ USER $NB_UID
 
 # Temporarily copy the files from the repo since most of them are used
 # by conda install
-COPY --chown=${NB_UID}:${NB_GID} . ${HOME}
+COPY --chown=jovyan . ${HOME} # Why doesn't ${NB_UID}:${NB_GID} work?
 
 RUN conda env update -n base -f environment.yml
 
