@@ -1,8 +1,10 @@
 FROM jupyter/scipy-notebook
 
-# Install sshfs
+USER root
+
+# Install rsync ssh
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends sshfs && \
+    apt-get install -y --no-install-recommends openssh-client rsync && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
