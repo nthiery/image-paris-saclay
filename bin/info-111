@@ -48,7 +48,7 @@ run () {
     echo -n " "
     tput setaf 1
     echo "$@"
-    tput init
+    tput sgr0
     if [ -z $DRY_RUN ]; then
         "$@" || exit 1
     fi
