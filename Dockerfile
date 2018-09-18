@@ -13,7 +13,7 @@ USER $NB_UID
 
 # Temporarily copy the files from the repo since most of them are used
 # by conda install; why ${NB_UID}:${NB_GID} does not work?
-COPY --chown=jovyan . ${HOME}
+COPY --chown=1000:100 . ${HOME}
 
 RUN conda env update -n base -f environment.yml
 
