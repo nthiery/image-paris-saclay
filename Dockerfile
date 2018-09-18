@@ -12,8 +12,8 @@ RUN apt-get update && \
 USER $NB_UID
 
 # Temporarily copy the files from the repo since most of them are used
-# by conda install
-COPY --chown=jovyan . ${HOME} # Why doesn't ${NB_UID}:${NB_GID} work?
+# by conda install; why ${NB_UID}:${NB_GID} does not work?
+COPY --chown=jovyan . ${HOME}
 
 RUN conda env update -n base -f environment.yml
 
