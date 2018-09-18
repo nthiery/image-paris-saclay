@@ -13,7 +13,7 @@ USER $NB_UID
 
 # Temporarily copy the files from the repo since most of them are used
 # by conda install
-COPY --chown=$NB_UID:$NB_GID . ${HOME}
+COPY --chown=${NB_UID}:${NB_GID} . ${HOME}
 
 RUN conda env update -n base -f environment.yml
 
