@@ -80,6 +80,13 @@ sync_from_tp() {
     exit 0
 }
 
+clean_root_files() {
+    cd $HOME
+    echo "Nettoyage des fichiers indus"
+    for x in *; do test -O $x  || mv $x .$x; done
+    exit 0
+}
+
 command=$1
 
 if [ "$command" = "-n" ]; then
@@ -122,6 +129,8 @@ case $command in
         mount;;
     sync)
         sync_from_tp;;
+    clean_root_files)
+        clean_root_files;;
     *)
         echo commande info-111 $command inconnue
         help
