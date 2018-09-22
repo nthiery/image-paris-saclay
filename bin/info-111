@@ -23,7 +23,7 @@ Soumettre son TP ou projet (ici pour la semaine 1):
        cd ~/$COURSE
        info-111 submit Semaine1
 
-Lancer le notebook jupyter:
+Lancer le notebook Jupyter:
 
        info-111 jupyter notebook
 
@@ -33,6 +33,39 @@ Compiler un programme (ici essai.cpp):
 
 EOF
 }
+
+advanced_help() {
+    cat <<EOF
+
+Aide pour l'utilisation de la commande info-111
+===============================================
+
+Lancer une commande arbitraire dans l'environnement conda:
+
+     info-111 run commande arg1 arg2
+
+Mettre à jour son répertoire Info111 à partir du répertoire éponyme sur les machines du SIF (par rsync):
+
+     info-111 sync
+
+Monter le répertoire Info111 depuis les machines du SIF par sshfs:
+
+     info-111 mount
+
+Collecter les soumissions des étudiants; à lancer par Nicolas sur les machines du SIF:
+
+     info-111 collect Semaine3
+
+Supprimer (en fait renommer avec un . devant) les fichiers du
+répertoire personnel n'appartenant pas à l'utilisateur; cas d'usage:
+faire le nettoyage des répertoires personnels qui se sont fait polluer
+lors de la première itération du serveur:
+
+     info-111 clean_root_files
+
+EOF
+}
+
 
 check_dir () {
     if [ `pwd` != "$HOME/$COURSE" ]; then
@@ -63,7 +96,21 @@ fetch () {
 }
 
 submit() {
-    run nbgrader submit --Exchange.root=/public/info-111/exchange --course=$COURSE $1
+    ASSIGNMENT=$1
+    if [ -n $JUPYTERHUB_USER ]; then # Sur le serveur JupyterHub
+        echo info-111: transfert du dossier $ASSIGNMENT sur les machines du SIF
+        run rsync --update -avz  $HOME/$COURSE/$ASSIGNMENT $USER@$SIF:.$COURSE/$ASSIGNMENT
+        echo info-111: soumission du dossier $ASSIGNMENT
+        run ssh $SIF "cd .$COURSE && info-111 submit $ASSIGNMENT"
+    else
+        run nbgrader submit --Exchange.root=/public/info-111/exchange --course=$COURSE $ASSIGNMENT
+    fi
+    exit 0
+}
+
+collect() {
+    ASSIGNMENT=$1
+    run nbgrader collect --Exchange.root=/public/info-111/exchange --course=$COURSE $ASSIGNMENT
     exit 0
 }
 
@@ -106,6 +153,9 @@ case $command in
     help)
         help
         exit 0;;
+    advanced_help)
+        advanced_help
+        exit 0;;
     g++)
         command="g++ -Wall -pedantic -Wno-sign-compare -Wno-unused-value -std=c++11 ";;
     jupyter)
@@ -120,6 +170,9 @@ case $command in
         check_dir
         fetch "$@";;
     submit)
+        check_dir
+        submit "$@";;
+    collect)
         check_dir
         submit "$@";;
     run) # run an arbitrary command in the conda environment; for testing and teacher's use
