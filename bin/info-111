@@ -5,7 +5,7 @@ if [ -n "$JUPYTERHUB_USER" ]; then
     USER=`basename -s -at-u-psud.fr $JUPYTERHUB_USER`
 fi
 SIF=tp-ssh1.dep-informatique.u-psud.fr
-CLASS=Info111
+COURSE=Info111
 
 help () {
     cat <<EOF
@@ -15,12 +15,12 @@ Aide pour l'utilisation de la commande info-111
 
 Télécharger et extraire l'archive pour un TP ou un projet (ici pour la semaine 1):
 
-       cd ~/$CLASS
+       cd ~/$COURSE
        info-111 fetch Semaine1
 
 Soumettre son TP ou projet (ici pour la semaine 1):
 
-       cd ~/$CLASS
+       cd ~/$COURSE
        info-111 submit Semaine1
 
 Lancer le notebook jupyter:
@@ -35,8 +35,8 @@ EOF
 }
 
 check_dir () {
-    if [ `pwd` != "$HOME/$CLASS" ]; then
-        echo Vous devez être dans le sous-répertoire $CLASS de votre répertoire pour lancer cette commande
+    if [ `pwd` != "$HOME/$COURSE" ]; then
+        echo Vous devez être dans le sous-répertoire $COURSE de votre répertoire pour lancer cette commande
         exit 1
     fi
 }
@@ -69,14 +69,14 @@ submit() {
 
 mount() {
     cd $HOME
-    run mkdir -p $CLASS
-    run sshfs $USER@$SIF:$CLASS $CLASS
+    run mkdir -p $COURSE
+    run sshfs $USER@$SIF:$COURSE $COURSE
     exit 0
 }
 
 sync_from_tp() {
     cd $HOME
-    run rsync --update -avz  $USER@$SIF:$CLASS/ $CLASS/
+    run rsync --update -avz  $USER@$SIF:$COURSE/ $COURSE/
     exit 0
 }
 
