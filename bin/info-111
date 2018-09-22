@@ -101,7 +101,7 @@ submit() {
         echo info-111: transfert du dossier $ASSIGNMENT sur les machines du SIF
         run rsync --update -avz  $HOME/$COURSE/$ASSIGNMENT $USER@$SIF:.$COURSE/$ASSIGNMENT
         echo info-111: soumission du dossier $ASSIGNMENT
-        run ssh $SIF "cd .$COURSE && info-111 submit $ASSIGNMENT"
+        run ssh $USER@$SIF "cd .$COURSE && info-111 submit $ASSIGNMENT"
     else
         run nbgrader submit --Exchange.root=/public/info-111/exchange --course=$COURSE $ASSIGNMENT
     fi
