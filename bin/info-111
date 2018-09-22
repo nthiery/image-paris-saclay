@@ -63,7 +63,7 @@ fetch () {
 }
 
 submit() {
-    run nbgrader submit --ExchangeSubmit.root=/public/info-111/exchange --course=info-111 $1
+    run nbgrader submit --Exchange.root=/public/info-111/exchange --course=$COURSE $1
     exit 0
 }
 
