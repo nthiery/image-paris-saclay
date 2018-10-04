@@ -1,20 +1,20 @@
 ## -*- encoding: utf-8 -*-
 import os
-import sys
-from setuptools import setup, Extension
-from codecs import open # To open the README file with proper encoding
-from setuptools.command.test import test as TestCommand # for tests
+from setuptools import setup
 from setuptools.command.install import install
 
-# Monkey patches xeus-cling to display type information
 import shutil
 class CustomInstallCommand(install):
-    """Customized setuptools install command - prints a friendly greeting."""
     def run(self):
+        # Monkey patches xeus-cling to display type information in outputs
         file = "xmime.hpp"
         target = os.path.join(self.install_base, "include", "xcpp", file)
         print("manually copying {} to {} ".format(file, target))
         shutil.copyfile(file, target)
+        # Activate nbgrader's extensions
+        os.system("jupyter nbextension install --sys-prefix --py nbgrader")
+        os.system("jupyter nbextension enable --sys-prefix --py nbgrader")
+        # Proceed with standard install
         install.run(self)
 
 setup(

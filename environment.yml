@@ -1,4 +1,4 @@
-# Logiciels requis pour utiliser les documents du cours Info 111
+# Logiciels requis pour utiliser et travailler sur les documents du cours Info 111
 name: info-111
 
 channels:
@@ -6,10 +6,14 @@ channels:
 - conda-forge
 
 dependencies:
-- cling
 - xeus-cling
 - notebook
 - nbgrader
+- pandas         # for managing grades
 - pip:
     - ordo
+    - nbdime
     - .
+#- matplotlib
+#- cycler         # missing matplotlib dependecy: https://stackoverflow.com/questions/44419333/matplotlib-cant-find-cycler
+#- xplot

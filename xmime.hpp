@@ -12,14 +12,19 @@
 #include "cling/Interpreter/RuntimePrintValue.h"
 #include "xeus/xjson.hpp"
 
-// Patch for info-111: print type information alongside outputs
+//////////////////////////////////////////////////////////////////////////////
+/// Patches for Info111 by Nicolas M. Thiéry
+/// - Print type information alongside outputs
 #include <cxxabi.h>
 template<class C>
-char * type(C c) {
+char * type(const C &c) {
     int status;
     char * demangled;
     return abi::__cxa_demangle(typeid(c).name(),0,0,&status);
 }
+/// - ASSERT macro
+#define ASSERT(C) if ( !(C) ) { throw std::runtime_error("\x1b[48;5;224mTest failed: "#C); }
+//////////////////////////////////////////////////////////////////////////////
 
 namespace xcpp
 {
@@ -28,6 +33,7 @@ namespace xcpp
     xeus::xjson mime_bundle_repr(const T& value)
     {
         auto bundle = xeus::xjson::object();
+        /// Print type information alongside outputs
         bundle["text/plain"] = cling::printValue(&value) + "\ntype: "+type(value);
         return bundle;
     }

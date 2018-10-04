@@ -6,6 +6,7 @@ if [ -n "$JUPYTERHUB_USER" ]; then
 fi
 SIF=tp-ssh1.dep-informatique.u-psud.fr
 COURSE=Info111
+export LANG=fr_FR.UTF-8
 
 help () {
     cat <<EOF
@@ -97,7 +98,7 @@ fetch () {
 
 submit() {
     ASSIGNMENT=$1
-    if [ -n $JUPYTERHUB_USER ]; then # Sur le serveur JupyterHub
+    if [ -n "$JUPYTERHUB_USER" ]; then # Sur le serveur JupyterHub
         echo info-111: transfert du dossier $ASSIGNMENT sur les machines du SIF
         run rsync --update -avz  $HOME/$COURSE/$ASSIGNMENT $USER@$SIF:.$COURSE/$ASSIGNMENT
         echo info-111: soumission du dossier $ASSIGNMENT
@@ -174,7 +175,7 @@ case $command in
         submit "$@";;
     collect)
         check_dir
-        submit "$@";;
+        collect "$@";;
     run) # run an arbitrary command in the conda environment; for testing and teacher's use
         command="$1"
         shift;;
