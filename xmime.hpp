@@ -22,8 +22,6 @@ char * type(const C &c) {
     char * demangled;
     return abi::__cxa_demangle(typeid(c).name(),0,0,&status);
 }
-/// - ASSERT macro
-#define ASSERT(C) if ( !(C) ) { throw std::runtime_error("\x1b[48;5;224mTest failed: "#C); }
 //////////////////////////////////////////////////////////////////////////////
 
 namespace xcpp

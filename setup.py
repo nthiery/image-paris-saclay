@@ -1,5 +1,6 @@
 ## -*- encoding: utf-8 -*-
 import os
+import io
 from setuptools import setup
 from setuptools.command.install import install
 
@@ -11,6 +12,15 @@ class CustomInstallCommand(install):
         target = os.path.join(self.install_base, "include", "xcpp", file)
         print("manually copying {} to {} ".format(file, target))
         shutil.copyfile(file, target)
+        file = "info-111.hpp"
+        target = os.path.join(self.install_base, "include", file)
+        print("manually copying {} to {} ".format(file, target))
+        shutil.copyfile(file, target)
+
+        file = "xeus.hpp"
+        target = os.path.join(self.install_base, "include", "xeus", file)
+        io.open(target, mode='a').write('#include "info-111.hpp"\n')
+
         # Activate nbgrader's extensions
         os.system("jupyter nbextension install --sys-prefix --py nbgrader")
         os.system("jupyter nbextension enable --sys-prefix --py nbgrader")
