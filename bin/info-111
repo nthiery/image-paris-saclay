@@ -93,7 +93,6 @@ fetch () {
     run wget "$url/$archive.zip"
     run unzip "$archive.zip"
     run rm "$archive.zip"
-    exit 0
 }
 
 submit() {
@@ -106,33 +105,32 @@ submit() {
     else
         run nbgrader submit --Exchange.root=/public/info-111/exchange --course=$COURSE $ASSIGNMENT
     fi
-    exit 0
 }
 
 collect() {
     ASSIGNMENT=$1
     run nbgrader collect --Exchange.root=/public/info-111/exchange --course=$COURSE $ASSIGNMENT
-    exit 0
 }
 
 mount() {
     cd $HOME
     run mkdir -p $COURSE
     run sshfs $USER@$SIF:$COURSE $COURSE
-    exit 0
 }
 
-sync_from_tp() {
+rsync_from_sif() {
     cd $HOME
     run rsync --update -avz  $USER@$SIF:$COURSE/ $COURSE/
-    exit 0
+}
+rsync_to_sif() {
+    cd $HOME
+    run rsync --update -avz  $COURSE/ $USER@$SIF:$COURSE/
 }
 
 clean_root_files() {
     cd $HOME
     echo "Nettoyage des fichiers indus"
     for x in *; do test -O $x  || mv $x .$x; done
-    exit 0
 }
 
 command=$1
@@ -166,25 +164,33 @@ case $command in
         fi;;
     get)
         check_dir
-        fetch "$@";;
+        fetch "$@"
+        exit 0;;
     fetch)
         check_dir
-        fetch "$@";;
+        fetch "$@"
+        exit 0;;
     submit)
         check_dir
-        submit "$@";;
+        submit "$@"
+        exit 0;;
     collect)
         check_dir
-        collect "$@";;
+        collect "$@"
+        exit 0;;
     run) # run an arbitrary command in the conda environment; for testing and teacher's use
         command="$1"
         shift;;
     mount)
-        mount;;
+        mount
+        exit 0;;
     sync)
-        sync_from_tp;;
+        rsync_from_sif
+        rsync_to_sif
+        exit 0;;
     clean_root_files)
-        clean_root_files;;
+        clean_root_files
+        exit 0;;
     *)
         echo commande info-111 $command inconnue
         help
