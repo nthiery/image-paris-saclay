@@ -7,15 +7,12 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Use conda to install the software specified in environment.yml
+# Use conda to install the software stack from the relevant repositories
 
 USER $NB_UID
 
-# Temporarily copy the files from the repo since most of them are used
-# by conda install; why ${NB_UID}:${NB_GID} does not work?
-COPY --chown=1000:100 . ${HOME}
-
-RUN conda env update -n base -f environment.yml
+RUN git clone https://github.com/nthiery/Info111-notebooks && cd Info111-notebooks && conda env update -n base -f environment.yml
+#RUN git clone https://github.com/nthiery/Info111-notebooks && cd Info111-notebooks && conda env update -n base -f environment.yml
 
 # Cleanup the copied files for a pristine home directory
-RUN rm -rf ${HOME}/*
+RUN rm -rf ${HOME}/Info111-notebooks
