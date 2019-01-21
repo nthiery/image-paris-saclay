@@ -11,8 +11,5 @@ RUN apt-get update && \
 
 USER $NB_UID
 
-RUN git clone https://github.com/nthiery/Info111-notebooks && cd Info111-notebooks && conda env update -n base -f environment.yml
-#RUN git clone https://github.com/nthiery/Info111-notebooks && cd Info111-notebooks && conda env update -n base -f environment.yml
-
-# Cleanup the copied files for a pristine home directory
-RUN rm -rf ${HOME}/Info111-notebooks
+RUN git clone https://github.com/nthiery/Info111-notebooks repo && cd repo && conda env update -n base -f environment.yml && cd .. && rm -rf repo
+RUN git clone https://gitlab.u-psud.fr/MethNum/scripts.git repo && cd repo && conda env update -n base -f environment.yml && cd .. && rm -rf repo
