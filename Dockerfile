@@ -16,6 +16,10 @@ RUN for REPO in                                                \
         https://gitlab.u-psud.fr/MethNum/scripts.git           \
         https://github.com/nthiery/M1-ISD-AlgorithmiqueAvancee \
         ; do                                                   \
+        echo =================================================;\
+        echo Installing software stack for:                   ;\
+        echo   $REPO                                          ;\
+        echo =================================================;\
         git clone $REPO repo                        &&         \
         cd repo                                     &&         \
         conda env update -n base -f environment.yml &&         \
