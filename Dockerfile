@@ -11,7 +11,7 @@ RUN apt-get update && \
 
 USER $NB_UID
 
-RUN for REPO in
+RUN for REPO in                                                \
         https://github.com/nthiery/Info111-notebooks           \
         https://gitlab.u-psud.fr/MethNum/scripts.git           \
         https://github.com/nthiery/M1-ISD-AlgorithmiqueAvancee \
