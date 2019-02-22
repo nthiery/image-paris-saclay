@@ -13,6 +13,7 @@ USER $NB_UID
 
 RUN for REPO in                                                \
         https://github.com/nthiery/Info111-notebooks           \
+        https://gitlab.u-psud.fr/Info122/Info122.git           \
         https://gitlab.u-psud.fr/MethNum/scripts.git           \
         https://github.com/nthiery/M1-ISD-AlgorithmiqueAvancee \
         ; do                                                   \
