@@ -12,7 +12,7 @@ RUN apt-get update && \
 USER $NB_UID
 
 RUN for REPO in                                                \
-        https://github.com/nthiery/Info111-notebooks           \
+        https://gitlab.u-psud.fr/Info111/outbound.git          \
         https://gitlab.u-psud.fr/Info122/Info122.git           \
         https://github.com/madclam/info113/                    \
         https://gitlab.u-psud.fr/MethNum/scripts.git           \
@@ -23,9 +23,7 @@ RUN for REPO in                                                \
         echo   $REPO                                          ;\
         echo =================================================;\
         git clone $REPO repo                        &&         \
-        cd repo                                     &&         \
-        conda env update -n base -f environment.yml &&         \
-        cd ..                                       &&         \
+        (cd repo; test -d binder && cd binder; conda env update -n base -f environment.yml) &&         \
         rm -rf repo                                 ||         \
         break 0;                                               \
     done
