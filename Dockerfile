@@ -7,6 +7,8 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+RUN echo 'export PS1=`echo $JUPYTERHUB_USER| sed s/-at-u-psud.fr//`"@jupyterhub \w \$"' > /root/.bash_profile
+
 # Use conda to install the software stack from the relevant repositories
 
 USER $NB_UID
