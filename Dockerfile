@@ -29,3 +29,6 @@ RUN for REPO in                                                \
         rm -rf repo                                 ||         \
         break 0;                                               \
     done
+ 
+ RUN conda install r r-essentials
+ 
