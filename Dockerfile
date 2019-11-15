@@ -3,7 +3,7 @@ FROM jupyter/scipy-notebook
 # Use apt to install rsync, ssh, less, tree
 USER root
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends openssh-client rsync unison less tree curl gdb && \
+    apt-get install -y --no-install-recommends openssh-client rsync unison less tree curl gdb imagemagick && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
