@@ -29,6 +29,8 @@ RUN for REPO in                                                \
         rm -rf repo                                 ||         \
         break 0;                                               \
     done
- 
- RUN conda install r r-essentials
- 
+
+# R: potential users at STAPS
+# FactoMineR package: used by Albane Saintenoy and students for PCA / clustering
+# in the course "Traitement de données hydrologiques" of M2 HSS
+RUN conda install -c conda-forge r r-essentials r-factominer
