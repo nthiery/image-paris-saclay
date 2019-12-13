@@ -28,7 +28,7 @@ RUN for REPO in                                                \
         echo   $REPO                                          ;\
         echo =================================================;\
         git clone $REPO repo                        &&         \
-        (cd repo; test -d binder && cd binder; manba env update -n base -f environment.yml) &&         \
+        (cd repo; test -d binder && cd binder; mamba env update -n base -f environment.yml) &&         \
         rm -rf repo                                 ||         \
         break 0;                                               \
     done
