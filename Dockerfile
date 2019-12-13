@@ -13,6 +13,9 @@ RUN echo 'export PS1=`echo $JUPYTERHUB_USER| sed s/-at-u-psud.fr//`"@jupyterhub 
 
 USER $NB_UID
 
+RUN conda update  -n base -c conda-forge conda
+RUN conda install -n base -c conda-forge mamba
+
 RUN for REPO in                                                \
         https://gitlab.u-psud.fr/Info111/outbound.git          \
         https://gitlab.u-psud.fr/Info122/Info122.git           \
@@ -25,7 +28,7 @@ RUN for REPO in                                                \
         echo   $REPO                                          ;\
         echo =================================================;\
         git clone $REPO repo                        &&         \
-        (cd repo; test -d binder && cd binder; conda env update -n base -f environment.yml) &&         \
+        (cd repo; test -d binder && cd binder; manba env update -n base -f environment.yml) &&         \
         rm -rf repo                                 ||         \
         break 0;                                               \
     done
@@ -33,4 +36,4 @@ RUN for REPO in                                                \
 # R: potential users at STAPS
 # FactoMineR package: used by Albane Saintenoy and students for PCA / clustering
 # in the course "Traitement de données hydrologiques" of M2 HSS
-RUN conda install -c conda-forge r r-essentials r-factominer
+RUN mamba install -c conda-forge r r-essentials r-factominer
