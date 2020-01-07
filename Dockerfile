@@ -22,6 +22,7 @@ RUN for REPO in                                                \
         https://github.com/madclam/info113/                    \
         https://gitlab.u-psud.fr/MethNum/scripts.git           \
         https://github.com/nthiery/M1-ISD-AlgorithmiqueAvancee \
+        https://gitlab.u-psud.fr/nicolas.thiery/ter-jupyter    \
         ; do                                                   \
         echo =================================================;\
         echo Installing software stack for:                   ;\
